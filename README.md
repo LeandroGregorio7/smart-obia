@@ -58,25 +58,28 @@ Smart OBIA is highly versatile and can be applied to various remote sensing work
 
 Watch these quick tutorials to master the Smart OBIA workflow from start to finish:
 
-### 1. Preparation & Segmentation
-*(Learn how to prepare your raster data, extract features, and create the initial segmented polygons.)*
-<a href="YOUR_VIDEO_LINK_1" target="_blank">
-  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_1/0.jpg" alt="Watch Video 1" width="400" />
-</a>
+### 1. Preparation
+Radiometric index calculation
+https://github.com/user-attachments/assets/ad0094cd-b725-4a7c-bffb-6e3ee7027340
 
-### 2. Training & Classification
-*(How to select training samples, configure the Machine Learning algorithms (Random Forest/Extra Trees), and run the classification in batch.)*
-<a href="YOUR_VIDEO_LINK_2" target="_blank">
-  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_2/0.jpg" alt="Watch Video 2" width="400" />
-</a>
+Textures GLCM extractor and Spectral signature analyser
+https://github.com/user-attachments/assets/4b619dfa-ab0b-446e-b642-b072135c808c
 
-### 3. Statistical Validation & Dashboards
-*(How to interpret the HTML reports, understand the Confusion Matrix, analyze SHAP feature importance, and use the Master Dashboard to compare models.)*
-<a href="YOUR_VIDEO_LINK_3" target="_blank">
-  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_3/0.jpg" alt="Watch Video 3" width="400" />
-</a>
+Join all bands with Stack Bands
+https://github.com/user-attachments/assets/b5ba6e22-e3bb-41f1-80fc-d80f46435b14
 
-> **Note:** Replace the `href` links and images above with your actual YouTube or Vimeo video links.
+
+### 2. Segmentation
+
+https://github.com/user-attachments/assets/2a9ea491-6abf-4375-88ff-b79c2d422fa2
+
+### 3. Classification
+
+
+
+
+
+
 
 ---
 
