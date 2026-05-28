@@ -1,0 +1,24 @@
+# Smart OBIA Plugin Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core scientific computing
+numpy>=1.19.0
+scipy>=1.5.0
+
+# Image processing
+scikit-image>=0.17.0
+Pillow>=8.0.0
+
+# Machine learning
+scikit-learn>=0.24.0
+catboost>=1.0.0    # <- NOVA DEPENDÊNCIA ADICIONADA
+
+# Data handling
+pandas>=1.1.0
+
+# Optional: for advanced analysis
+matplotlib>=3.3.0
+seaborn>=0.11.0
+geopandas>=0.9.0
+rasterio>=1.1.0
+fiona>=1.8.0
