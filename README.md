@@ -21,24 +21,18 @@ The QGIS ecosystem offers several classification tools. **Smart OBIA** stands ou
 | **Explainability** | Black-box or basic thresholding. | Black-box. | Complete Black-box. | **Transparent (SHAP).** Tells you exactly *which* band drove the decision. |
 | **Validation** | Basic error matrix. | External tools required. | Built-in (often python-only metrics). | **Automated HTML Dashboards** directly inside QGIS. |
 
-### Detailed Comparison
-
-*   **Pixel-Based Classification:** Each pixel is treated as an independent unit, and classification is based solely on the spectral values of that pixel. This can result in noise and a lack of spatial coherence [1].
-*   **GEOBIA (Geographic Object-Based Image Analysis):** Divides remote sensing images into meaningful image objects (segments) and evaluates their spatial, spectral, and temporal characteristics. This reduces noise and improves classification accuracy by considering spatial context [2]. Standard GEOBIA plugins in QGIS often offer simpler algorithms.
-*   **Deep Learning:** Uses deep neural networks for classification, achieving high accuracy. However, it requires large volumes of training data and robust computational hardware (GPUs). The interpretability of Deep Learning models is often a challenge, as they are frequently considered "black boxes" [3]. Plugins like QGIS Deepness [4] bring this capability to QGIS.
-*   **Smart OBIA:** Combines the robustness of the OBIA approach with optimized Machine Learning algorithms and explainability via SHAP. By classifying pre-segmented objects, Smart OBIA offers results with high spatial coherence and reduces the need for extreme hardware, making it accessible to a wider range of users. The integration of HTML dashboards for statistical validation and model explainability are key differentiators.
-
 ---
 
 ## ⚙️ Algorithms & Core Functions
 
-Smart OBIA provides a suite of algorithms via `scikit-learn` to handle various cartographic challenges. Each function is optimized to read QGIS vectors efficiently:
+Smart OBIA provides a robust suite of machine learning algorithms to handle various cartographic challenges. Each function is optimized to read QGIS vectors efficiently:
 
-*   🌲 **Random Forest (RF):** The gold standard for remote sensing. Builds an ensemble of decision trees. Excellent for high-dimensional data (dozens of bands/textures) and highly resistant to overfitting.
+*   🌲 **Random Forest (RF):** The gold standard for remote sensing. Builds an ensemble of decision trees. Excellent for high-dimensional data and highly resistant to overfitting.
 *   🌳 **Extra Trees (ET):** Similar to Random Forest, but introduces more randomness in the cut-off points. Often faster and performs exceptionally well on noisy datasets.
-*   📐 **Support Vector Machine (SVM):** Uses geometric hyperplanes to separate classes in 3D space. Highly effective for complex, non-linear boundaries when features are well-scaled.
+*   🚀 **CatBoost:** A high-performance gradient boosting library that handles categorical features automatically and provides state-of-the-art accuracy for complex spatial patterns.
+*   📐 **Support Vector Machine (SVM):** Uses geometric hyperplanes to separate classes in 3D space. Highly effective for complex, non-linear boundaries.
 *   📊 **Gaussian Mixture Models (GMM):** A probabilistic clustering model that assumes all data points are generated from a mixture of Gaussian distributions. Great for continuous spectral transitions.
-*   📈 **Automated SHAP Validation:** Every classification generates an interactive HTML Validation Report featuring Overall Accuracy, F1-Scores, Spatial Confusion Matrices, and **Feature Importance (SHAP)** graphs. SHAP (SHapley Additive exPlanations) is a powerful tool for unveiling the influence of individual features on model predictions, providing interpretability [5].
+*   📈 **Automated SHAP Validation:** Every classification generates an interactive HTML Validation Report featuring Overall Accuracy, F1-Scores, Spatial Confusion Matrices, and **Feature Importance (SHAP)** graphs for model interpretability [5].
 
 ---
 
@@ -57,47 +51,57 @@ Smart OBIA is highly versatile and can be applied to various remote sensing work
 
 Watch these quick tutorials to master the Smart OBIA workflow from start to finish:
 
-### 1. Preparation & Segmentation
-*(Learn how to prepare your raster data, extract features, and create the initial segmented polygons.)*
-<a href="YOUR_VIDEO_LINK_1" target="_blank">
-  <img src="https://github.com/user-attachments/assets/c5a0210d-e79b-4d90-956d-cdbe0a0f359e" alt="Watch Video 1" width="400" />
-</a>
+### 1. Calculate Radiometric Index
+*(Learn how to process your raw raster data to generate key spectral indices like NDVI, EVI, or NDWI to enhance feature detection.)*
+<p align="left">
+  <a href="https://github.com/user-attachments/assets/c5a0210d-e79b-4d90-956d-cdbe0a0f359e" target="_blank">
+    <img src="https://github.com/user-attachments/assets/c5a0210d-e79b-4d90-956d-cdbe0a0f359e" alt="Watch Video 1" width="400" />
+  </a>
+</p>
 
-### 2. Training & Classification
-*(How to select training samples, configure the Machine Learning algorithms (Random Forest/Extra Trees), and run the classification in batch.)*
-<a href="YOUR_VIDEO_LINK_2" target="_blank">
-  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_2/0.jpg" alt="Watch Video 2" width="400" />
-</a>
+### 2. Texture Extractor & Spectral Signature Analyst
+*(How to extract advanced texture metrics and analyze the spectral signatures of your segmented objects to prepare the training dataset.)*
+<p align="left">
+  <a href="https://github.com/user-attachments/assets/74312f19-2393-4f95-8a4f-abf842788cb4" target="_blank">
+    <img src="https://github.com/user-attachments/assets/74312f19-2393-4f95-8a4f-abf842788cb4" alt="Watch Video 2" width="400" />
+  </a>
+</p>
 
-### 3. Statistical Validation & Dashboards
-*(How to interpret the HTML reports, understand the Confusion Matrix, analyze SHAP feature importance, and use the Master Dashboard to compare models.)*
-<a href="YOUR_VIDEO_LINK_3" target="_blank">
-  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_3/0.jpg" alt="Watch Video 3" width="400" />
-</a>
+### 3. Stack Bands
+*(Learn how to correctly layer and stack your spectral and texture bands to create a comprehensive multi-dimensional input for the machine learning model.)*
+<p align="left">
+  <a href="https://github.com/user-attachments/assets/82e3257f-ed15-42af-b22d-780c40d39736" target="_blank">
+    <img src="https://github.com/user-attachments/assets/82e3257f-ed15-42af-b22d-780c40d39736" alt="Watch Video 3" width="400" />
+  </a>
+</p>
 
-> **Note:** Replace the `href` links and images above with your actual YouTube or Vimeo video links.
+### 4. Classification
+*(Run the final classification by choosing from a powerful set of Machine Learning algorithms, including **Random Forest, Extra Trees, CatBoost, SVM, and GMM**. This step also generates automated validation dashboards and SHAP importance reports to ensure model transparency.)*
+<p align="left">
+  <a href="https://github.com/user-attachments/assets/e0ed97b4-fc58-48a5-9556-12dd2c735e84" target="_blank">
+    <img src="https://github.com/user-attachments/assets/e0ed97b4-fc58-48a5-9556-12dd2c735e84" alt="Watch Video 4" width="400" />
+  </a>
+</p>
 
 ---
 
 ## 🛠️ Requirements & Installation
 
-### ⚠️ Prerequisite: Scikit-Learn
-Smart OBIA relies heavily on the **Scikit-Learn** library. You must install it in your QGIS Python environment before activating the plugin.
+### ⚠️ Prerequisite: Scikit-Learn & CatBoost
+Smart OBIA relies on the **Scikit-Learn** and **CatBoost** libraries. You must install them in your QGIS Python environment before activating the plugin.
 
 **Windows Installation:**
 1.  Close QGIS.
 2.  Open the Windows Start Menu, search for **OSGeo4W Shell**, right-click it, and select **Run as Administrator**.
 3.  Run the following command exactly as written:
     ```cmd
-    python -m pip install scikit-learn
+    python -m pip install scikit-learn catboost
     ```
 
 **Linux/macOS Installation:**
-1.  Open a terminal.
-2.  Check the Python version used by QGIS (usually `python3` or `python`). You can find this in QGIS -> Settings -> Options -> System -> Environment Paths.
-3.  Run the installation command, replacing `python3` with the correct version if necessary:
+1.  Open a terminal and run:
     ```bash
-    python3 -m pip install scikit-learn
+    python3 -m pip install scikit-learn catboost
     ```
 
 ### Smart OBIA Plugin Installation
