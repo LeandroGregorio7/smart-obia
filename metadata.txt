@@ -1,14 +1,14 @@
 [general]
 name=Smart OBIA
-qgisMinimumVersion=3.16
+qgisMinimumVersion=3.00
 description=Plugin para Object-Based Image Analysis (OBIA) com Classificação ML (Random Forest, SVM, CatBoost), Segmentação e Índices RGB.
-version=0.3.0
+version=1.0.0
 author=Leandro da Silva Gregorio
 email=leangeosmart@gmail.com
 about=Plugin Smart OBIA para processamento avançado de imagens com segmentação e classificação de Machine Learning.
-tracker=https://github.com/example/smart_obia
-repository=https://github.com/example/smart_obia
-homepage=https://github.com/example/smart_obia
+tracker=https://github.com/LeandroGregorio7/smart-obia
+repository=https:https://github.com/LeandroGregorio7/smart-obia
+homepage=https:https://github.com/LeandroGregorio7/smart-obia
 category=Raster
 icon=icon.png
 experimental=False
