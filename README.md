@@ -1,227 +1,117 @@
-# Smart OBIA Plugin para QGIS
+# 🧠 Smart OBIA for QGIS
 
-Plugin avançado para **Object-Based Image Analysis (OBIA)** no QGIS, implementando segmentação de imagens multiespectrais com múltiplos algoritmos e extração automática de features radiométricas e espaciais.
+![QGIS Version](https://img.shields.io/badge/QGIS-3.10%2B-green?logo=qgis)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)
+![Scikit-Learn](https://img.shields.io/badge/Machine%20Learning-Scikit--Learn-orange)
+![License](https://img.shields.io/badge/License-GPLv3-lightgrey)
 
-## Características Principais
-
-### 1. Algoritmos de Segmentação
-
-O plugin implementa três algoritmos de segmentação de imagens:
-
-#### **SLIC (Simple Linear Iterative Clustering)**
-- Segmentação baseada em superpixels
-- Parâmetros ajustáveis:
-  - **Número de Segmentos**: Define a quantidade de segmentos desejados (10-10000)
-  - **Compactness**: Controla a regularidade espacial dos segmentos (0.1-100.0)
-- Ideal para: Análise de texturas, detecção de mudanças, classificação de cobertura do solo
-
-#### **K-Means**
-- Clustering espectral de pixels
-- Parâmetros ajustáveis:
-  - **Número de Clusters**: Define quantos clusters espectrais serão criados (2-500)
-- Ideal para: Classificação espectral, separação de classes espectrais distintas
-
-#### **Watershed**
-- Segmentação baseada em gradiente e marcadores
-- Parâmetros ajustáveis:
-  - **Banda de Marcador**: Define qual banda será usada para criar marcadores (1-indexed)
-- Ideal para: Delineamento de objetos, segmentação baseada em elevação
-
-### 2. Extração Automática de Features
-
-Para cada segmento, o plugin extrai:
-
-#### **Features Radiométricas (por banda)**
-- **Média**: Valor médio dos pixels do segmento
-- **Desvio Padrão**: Variabilidade espectral dentro do segmento
-- **Mínimo**: Valor mínimo da banda no segmento
-- **Máximo**: Valor máximo da banda no segmento
-
-#### **Features Espaciais**
-- **Área em Pixels**: Número de pixels no segmento
-- **Perímetro**: Comprimento do perímetro do segmento (simplificado)
-
-### 3. Saídas
-
-O plugin gera duas saídas principais:
-
-1. **Raster de Segmentação**: Arquivo raster GeoTIFF com IDs dos segmentos
-2. **Camada Vetorial**: Arquivo Shapefile com polígonos dos segmentos e todas as features extraídas
-
-## Instalação
-
-### Requisitos do Sistema
-
-- **QGIS**: Versão 3.16 ou superior
-- **Python**: 3.6 ou superior
-- **Dependências Python**:
-  ```bash
-  pip install scikit-image scikit-learn scipy numpy
-  ```
-
-### Passos de Instalação
-
-1. Clone ou copie o diretório `smart_obia` para a pasta de plugins do QGIS:
-   - Linux: `~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/`
-   - macOS: `~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/`
-   - Windows: `%APPDATA%\QGIS\QGIS3\profiles\default\python\plugins\`
-
-2. Reinicie o QGIS
-
-3. Ative o plugin em **Plugins > Manage and Install Plugins > Smart OBIA**
-
-## Uso
-
-### Acessando o Algoritmo
-
-1. Abra o **Processing Toolbox** (Processamento > Caixa de Ferramentas)
-2. Procure por **Smart OBIA > Smart OBIA Segmentation**
-3. Configure os parâmetros conforme necessário
-
-### Exemplo de Uso
-
-#### Segmentação SLIC
-```
-Entrada: Imagem multiespectral (GeoTIFF)
-Método: SLIC
-Número de Segmentos: 100
-Compactness: 10.0
-Saída: segmentacao.tif e segmentacao.shp
-```
-
-#### Segmentação K-Means
-```
-Entrada: Imagem multiespectral (GeoTIFF)
-Método: K-Means
-Número de Clusters: 50
-Saída: segmentacao.tif e segmentacao.shp
-```
-
-#### Segmentação Watershed
-```
-Entrada: Imagem multiespectral (GeoTIFF)
-Método: Watershed
-Banda de Marcador: 1 (primeira banda)
-Saída: segmentacao.tif e segmentacao.shp
-```
-
-## Estrutura do Projeto
-
-```
-smart_obia/
-├── __init__.py                 # Inicialização do plugin
-├── metadata.txt                # Metadados do plugin
-├── icon.png                    # Ícone do plugin
-├── smart_obia_plugin.py        # Classe principal do plugin
-├── processing_provider.py      # Provedor de processamento
-└── algorithms/
-    ├── __init__.py
-    └── segmentation_algorithm.py  # Implementação dos algoritmos
-```
-
-## Detalhes Técnicos
-
-### Leitura de Dados Raster
-
-O plugin lê dados raster usando a API GDAL/OGR através do QGIS:
-- Suporta múltiplas bandas
-- Preserva georreferenciamento e projeção
-- Normaliza dados para processamento
-
-### Processamento de Segmentação
-
-1. **Leitura**: Carrega todas as bandas da imagem
-2. **Normalização**: Normaliza dados para intervalo 0-255 (SLIC) ou 0-1 (K-Means/Watershed)
-3. **Segmentação**: Aplica o algoritmo escolhido
-4. **Extração de Features**: Calcula estatísticas para cada segmento
-
-### Criação de Camada Vetorial
-
-- Converte segmentos raster em polígonos
-- Cria geometrias bounding box para cada segmento
-- Associa features extraídas como atributos
-- Salva em formato Shapefile com projeção original
-
-## Limitações Conhecidas
-
-1. **Geometrias Simplificadas**: As geometrias dos segmentos são representadas como bounding boxes (retângulos), não como contornos exatos
-2. **Performance**: Imagens muito grandes (> 5000x5000 pixels) podem ser lentas
-3. **Memória**: Requer memória suficiente para carregar toda a imagem em RAM
-4. **Bandas**: Suporta até 100 bandas, mas recomenda-se usar 3-10 bandas para melhor performance
-
-## Melhorias Futuras
-
-- [ ] Suporte para contornos exatos dos segmentos
-- [ ] Cálculo de texturas GLCM
-- [ ] Índices de forma (compacidade, alongamento)
-- [ ] Processamento de imagens grandes com tiles
-- [ ] Exportação para múltiplos formatos (GeoJSON, GeoPackage)
-- [ ] Interface gráfica customizada
-- [ ] Suporte para processamento em paralelo
-
-## Troubleshooting
-
-### Erro: "ModuleNotFoundError: No module named 'skimage'"
-
-**Solução**: Instale scikit-image
-```bash
-pip install scikit-image
-```
-
-### Erro: "ModuleNotFoundError: No module named 'sklearn'"
-
-**Solução**: Instale scikit-learn
-```bash
-pip install scikit-learn
-```
-
-### Plugin não aparece no QGIS
-
-**Solução**:
-1. Verifique se o diretório está no local correto
-2. Verifique se o arquivo `metadata.txt` está presente
-3. Reinicie o QGIS
-4. Verifique o log de plugins em **Plugins > Manage and Install Plugins > Installed**
-
-### Segmentação muito lenta
-
-**Solução**:
-- Reduza o tamanho da imagem antes de processar
-- Reduza o número de segmentos/clusters
-- Use apenas as bandas necessárias
-
-## Contribuindo
-
-Para contribuir com melhorias:
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes.
-
-## Autores
-
-- Desenvolvimento: Smart OBIA Team
-- Baseado em: QGIS Processing Framework, scikit-image, scikit-learn
-
-## Referências
-
-- [QGIS Documentation](https://docs.qgis.org/)
-- [scikit-image](https://scikit-image.org/)
-- [scikit-learn](https://scikit-learn.org/)
-- [Object-Based Image Analysis (OBIA)](https://en.wikipedia.org/wiki/Object-based_image_analysis)
-
-## Suporte
-
-Para reportar bugs ou solicitar features, abra uma issue no repositório do projeto.
+**Smart OBIA** is an advanced Object-Based Image Analysis (OBIA) and Machine Learning classification toolkit, natively integrated into the QGIS Processing Toolbox. Unlike traditional approaches that classify individual pixels, Smart OBIA focuses on classifying **objects (polygons)**, utilizing their spectral signatures, geometry, and texture. This plugin was developed to bridge the gap between spatial vector data and high-performance machine learning, allowing you to train, classify, and statistically validate your imagery entirely within the QGIS environment.
 
 ---
 
-**Versão**: 0.1.0  
-**Data de Atualização**: Maio 2026  
-**Status**: Em Desenvolvimento
+## 🎯 What makes Smart OBIA different?
+
+The QGIS ecosystem offers several classification tools. **Smart OBIA** stands out compared to traditional approaches and existing plugins, as detailed in the following table:
+
+| Feature | Traditional (Pixel-Based) | Standard GEOBIA Plugins | Deep Learning Plugins | 🧠 Smart OBIA |
+| :--- | :--- | :--- | :--- | :--- |
+| **Output Quality** | Often suffers from "salt-and-pepper" noise. | Good, but usually limited to basic algorithms. | Excellent, but borders can be fuzzy without post-processing. | **Excellent.** Classifies sharp, pre-segmented polygons. |
+| **Hardware Required** | Low (CPU). | Medium (CPU). | Extremely High (Requires powerful GPUs). | **Low/Medium (CPU).** Highly optimized ensemble trees. |
+| **Data Requirements** | Few pixels needed. | Moderate sample polygons. | Massive training datasets (thousands of samples). | **Moderate.** Achieves high accuracy with limited training samples. |
+| **Explainability** | Black-box or basic thresholding. | Black-box. | Complete Black-box. | **Transparent (SHAP).** Tells you exactly *which* band drove the decision. |
+| **Validation** | Basic error matrix. | External tools required. | Built-in (often python-only metrics). | **Automated HTML Dashboards** directly inside QGIS. |
+
+### Detailed Comparison
+
+*   **Pixel-Based Classification:** Each pixel is treated as an independent unit, and classification is based solely on the spectral values of that pixel. This can result in noise and a lack of spatial coherence [1].
+*   **GEOBIA (Geographic Object-Based Image Analysis):** Divides remote sensing images into meaningful image objects (segments) and evaluates their spatial, spectral, and temporal characteristics. This reduces noise and improves classification accuracy by considering spatial context [2]. Standard GEOBIA plugins in QGIS often offer simpler algorithms.
+*   **Deep Learning:** Uses deep neural networks for classification, achieving high accuracy. However, it requires large volumes of training data and robust computational hardware (GPUs). The interpretability of Deep Learning models is often a challenge, as they are frequently considered "black boxes" [3]. Plugins like QGIS Deepness [4] bring this capability to QGIS.
+*   **Smart OBIA:** Combines the robustness of the OBIA approach with optimized Machine Learning algorithms and explainability via SHAP. By classifying pre-segmented objects, Smart OBIA offers results with high spatial coherence and reduces the need for extreme hardware, making it accessible to a wider range of users. The integration of HTML dashboards for statistical validation and model explainability are key differentiators.
+
+---
+
+## ⚙️ Algorithms & Core Functions
+
+Smart OBIA provides a suite of algorithms via `scikit-learn` to handle various cartographic challenges. Each function is optimized to read QGIS vectors efficiently:
+
+*   🌲 **Random Forest (RF):** The gold standard for remote sensing. Builds an ensemble of decision trees. Excellent for high-dimensional data (dozens of bands/textures) and highly resistant to overfitting.
+*   🌳 **Extra Trees (ET):** Similar to Random Forest, but introduces more randomness in the cut-off points. Often faster and performs exceptionally well on noisy datasets.
+*   📐 **Support Vector Machine (SVM):** Uses geometric hyperplanes to separate classes in 3D space. Highly effective for complex, non-linear boundaries when features are well-scaled.
+*   📊 **Gaussian Mixture Models (GMM):** A probabilistic clustering model that assumes all data points are generated from a mixture of Gaussian distributions. Great for continuous spectral transitions.
+*   📈 **Automated SHAP Validation:** Every classification generates an interactive HTML Validation Report featuring Overall Accuracy, F1-Scores, Spatial Confusion Matrices, and **Feature Importance (SHAP)** graphs. SHAP (SHapley Additive exPlanations) is a powerful tool for unveiling the influence of individual features on model predictions, providing interpretability [5].
+
+---
+
+## 🌍 Real-World Applications
+
+Smart OBIA is highly versatile and can be applied to various remote sensing workflows:
+
+*   **Precision Agriculture:** Crop identification, disease mapping, and yield estimation based on spectral and structural indices.
+*   **Forestry & Conservation:** Detection of specific tree species (e.g., *Dipteryx alata* / Baru), deforestation tracking, and biomass estimation.
+*   **Urban Planning:** Mapping impervious surfaces, roof types, and urban green spaces.
+*   **Hydrology:** Mapping water bodies, wetlands, and flooded areas using radar (SAR) or optical imagery.
+
+---
+
+## 🎥 Video Tutorials (Step-by-Step)
+
+Watch these quick tutorials to master the Smart OBIA workflow from start to finish:
+
+### 1. Preparation & Segmentation
+*(Learn how to prepare your raster data, extract features, and create the initial segmented polygons.)*
+<a href="YOUR_VIDEO_LINK_1" target="_blank">
+  <img src="https://github.com/user-attachments/assets/c5a0210d-e79b-4d90-956d-cdbe0a0f359e" alt="Watch Video 1" width="400" />
+</a>
+
+### 2. Training & Classification
+*(How to select training samples, configure the Machine Learning algorithms (Random Forest/Extra Trees), and run the classification in batch.)*
+<a href="YOUR_VIDEO_LINK_2" target="_blank">
+  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_2/0.jpg" alt="Watch Video 2" width="400" />
+</a>
+
+### 3. Statistical Validation & Dashboards
+*(How to interpret the HTML reports, understand the Confusion Matrix, analyze SHAP feature importance, and use the Master Dashboard to compare models.)*
+<a href="YOUR_VIDEO_LINK_3" target="_blank">
+  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID_3/0.jpg" alt="Watch Video 3" width="400" />
+</a>
+
+> **Note:** Replace the `href` links and images above with your actual YouTube or Vimeo video links.
+
+---
+
+## 🛠️ Requirements & Installation
+
+### ⚠️ Prerequisite: Scikit-Learn
+Smart OBIA relies heavily on the **Scikit-Learn** library. You must install it in your QGIS Python environment before activating the plugin.
+
+**Windows Installation:**
+1.  Close QGIS.
+2.  Open the Windows Start Menu, search for **OSGeo4W Shell**, right-click it, and select **Run as Administrator**.
+3.  Run the following command exactly as written:
+    ```cmd
+    python -m pip install scikit-learn
+    ```
+
+**Linux/macOS Installation:**
+1.  Open a terminal.
+2.  Check the Python version used by QGIS (usually `python3` or `python`). You can find this in QGIS -> Settings -> Options -> System -> Environment Paths.
+3.  Run the installation command, replacing `python3` with the correct version if necessary:
+    ```bash
+    python3 -m pip install scikit-learn
+    ```
+
+### Smart OBIA Plugin Installation
+1.  In QGIS, go to `Plugins > Manage and Install Plugins...`.
+2.  In the `All` tab, search for "Smart OBIA".
+3.  Select the plugin and click `Install Plugin`.
+4.  After installation, Smart OBIA will be available in the QGIS Processing Toolbox.
+
+---
+
+## 📚 References
+
+[1] GEOBIA. (n.d.). *GEOBIA vs Pixel-Based Classification | Object vs Pixel Analysis*. Available at: [https://geobia.com/geobia-vs-pixel-based](https://geobia.com/geobia-vs-pixel-based)
+[2] Taylor & Francis. (n.d.). *a case study in a citrus orchard and an onion crop*. Available at: [https://www.tandfonline.com/doi/full/10.1080/22797254.2021.1951623](https://www.tandfonline.com/doi/full/10.1080/22797254.2021.1951623)
+[3] QGIS: Deepness. (n.d.). *Home — QGIS: Deepness: Deep Neural Remote Sensing 0.7 ...*. Available at: [https://qgis-plugin-deepness.readthedocs.io/](https://qgis-plugin-deepness.readthedocs.io/)
+[4] QGIS: Deepness. (n.d.). *Home — QGIS: Deepness: Deep Neural Remote Sensing 0.7 ...*. Available at: [https://qgis-plugin-deepness.readthedocs.io/](https://qgis-plugin-deepness.readthedocs.io/)
+[5] SHAP. (n.d.). *An introduction to explainable AI with Shapley values — SHAP latest ...*. Available at: [https://shap.readthedocs.io/en/latest/example_notebooks/overviews/An%20introduction%20to%20explainable%20AI%20with%20Shapley%20values.html](https://shap.readthedocs.io/en/latest/example_notebooks/overviews/An%20introduction%20to%20explainable%20AI%20with%20Shapley%20values.html)
