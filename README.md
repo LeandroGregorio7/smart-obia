@@ -2,7 +2,7 @@
 
 ![QGIS Version](https://img.shields.io/badge/QGIS-3.10%2B-green?logo=qgis)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)
-![Scikit-Learn](https://img.shields.io/badge/Machine%20Learning-Scikit--Learn-orange)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Scikit--Learn%20%26%20CatBoost-orange)
 ![License](https://img.shields.io/badge/License-GPLv3-lightgrey)
 
 **Smart OBIA** is an advanced Object-Based Image Analysis (OBIA) and Machine Learning classification toolkit, natively integrated into the QGIS Processing Toolbox. Unlike traditional approaches that classify individual pixels, Smart OBIA focuses on classifying **objects (polygons)**, utilizing their spectral signatures, geometry, and texture. This plugin was developed to bridge the gap between spatial vector data and high-performance machine learning, allowing you to train, classify, and statistically validate your imagery entirely within the QGIS environment.
@@ -53,35 +53,23 @@ Watch these quick tutorials to master the Smart OBIA workflow from start to fini
 
 ### 1. Calculate Radiometric Index
 *(Learn how to process your raw raster data to generate key spectral indices like NDVI, EVI, or NDWI to enhance feature detection.)*
-<p align="left">
-  <a href="https://github.com/user-attachments/assets/c5a0210d-e79b-4d90-956d-cdbe0a0f359e" target="_blank">
-    <img src="https://github.com/user-attachments/assets/c5a0210d-e79b-4d90-956d-cdbe0a0f359e" alt="Watch Video 1" width="400" />
-  </a>
-</p>
+
+https://github.com/user-attachments/assets/c5a0210d-e79b-4d90-956d-cdbe0a0f359e
 
 ### 2. Texture Extractor & Spectral Signature Analyst
 *(How to extract advanced texture metrics and analyze the spectral signatures of your segmented objects to prepare the training dataset.)*
-<p align="left">
-  <a href="https://github.com/user-attachments/assets/74312f19-2393-4f95-8a4f-abf842788cb4" target="_blank">
-    <img src="https://github.com/user-attachments/assets/74312f19-2393-4f95-8a4f-abf842788cb4" alt="Watch Video 2" width="400" />
-  </a>
-</p>
+
+https://github.com/user-attachments/assets/74312f19-2393-4f95-8a4f-abf842788cb4
 
 ### 3. Stack Bands
 *(Learn how to correctly layer and stack your spectral and texture bands to create a comprehensive multi-dimensional input for the machine learning model.)*
-<p align="left">
-  <a href="https://github.com/user-attachments/assets/82e3257f-ed15-42af-b22d-780c40d39736" target="_blank">
-    <img src="https://github.com/user-attachments/assets/82e3257f-ed15-42af-b22d-780c40d39736" alt="Watch Video 3" width="400" />
-  </a>
-</p>
+
+https://github.com/user-attachments/assets/82e3257f-ed15-42af-b22d-780c40d39736
 
 ### 4. Classification
 *(Run the final classification by choosing from a powerful set of Machine Learning algorithms, including **Random Forest, Extra Trees, CatBoost, SVM, and GMM**. This step also generates automated validation dashboards and SHAP importance reports to ensure model transparency.)*
-<p align="left">
-  <a href="https://github.com/user-attachments/assets/e0ed97b4-fc58-48a5-9556-12dd2c735e84" target="_blank">
-    <img src="https://github.com/user-attachments/assets/e0ed97b4-fc58-48a5-9556-12dd2c735e84" alt="Watch Video 4" width="400" />
-  </a>
-</p>
+
+https://github.com/user-attachments/assets/e0ed97b4-fc58-48a5-9556-12dd2c735e84
 
 ---
 
