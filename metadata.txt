@@ -2,7 +2,7 @@
 name=Smart OBIA
 qgisMinimumVersion=3.00
 description=Plugin para Object-Based Image Analysis (OBIA) com Classificação ML (Random Forest, SVM, CatBoost), Segmentação e Índices RGB.
-version=1.0.0
+version=1.0.1
 author=Leandro da Silva Gregorio
 email=leangeosmart@gmail.com
 about=Plugin Smart OBIA para processamento avançado de imagens com segmentação e classificação de Machine Learning.
