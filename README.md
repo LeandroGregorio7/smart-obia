@@ -19,6 +19,25 @@ The QGIS ecosystem offers several classification tools. **Smart OBIA** stands ou
 | **Hardware Required** | Low (CPU). | Medium (CPU). | Extremely High (Requires powerful GPUs). | **Low/Medium (CPU).** Highly optimized ensemble trees. |
 | **Data Requirements** | Few pixels needed. | Moderate sample polygons. | Massive training datasets (thousands of samples). | **Moderate.** Achieves high accuracy with limited training samples. |
 | **Explainability** | Black-box or basic thresholding. | Black-box. | Complete Black-box. | **Transparent (SHAP).** Tells you exactly *which* band drove the decision. |
+
+Smart OBIA v1.0.1 - UI & Radiometric Indices Update 🚀
+This patch brings critical bug fixes, UI improvements, and significantly expands the plugin's capability to process high-resolution RGB imagery (such as UAV orthomosaics and Google Earth exports) without requiring multispectral bands.
+
+🎉 New Features & Enhancements
+Smart Dynamic Band Loading: The Radiometric Indices algorithm is now fully context-aware. It dynamically loads only the required bands for the selected index. You can now seamlessly run RGB-only indices on 3-band rasters without the plugin crashing or searching for non-existent NIR/SWIR bands.
+
+New RGB-Specific Indices: Added ExG (Excess Green Index) and VDVI (Visible-band Difference Vegetation Index). These are highly optimized for extracting canopies, detecting green leaves, and discriminating crops/weeds using strictly visible bands.
+
+Revamped Indices UI: The dropdown menu for index selection has been completely reorganized into logical categories: [Vegetation (RGB-Only)], [Vegetation (Requires NIR)], [Water], [Built-up], and [Moisture / Soil].
+
+Built-in HTML Catalog: Added a dynamic Help Panel directly inside the Indices algorithm window. Users can now view a beautifully formatted HTML table containing the Description, Mathematical Formula, and Practical Application for every single supported index, without ever leaving QGIS.
+
+🐛 Bug Fixes
+Classification Algorithm Crash: Resolved a critical IndentationError and syntax bug in classification_algorithm.py that prevented the module from loading in the QGIS Processing Toolbox.
+
+Missing Icons Fix: Fixed the broken UI icons. Implemented a robust, multi-level dynamic path-search system that ensures the algorithm icons (icon.png) are correctly found and rendered in the QGIS interface, regardless of the user's OS or folder structure.
+
+Index Compatibility Protection: The plugin now actively protects the user from invalid executions. If a user mistakenly selects a multispectral index (e.g., NDVI) on an RGB-only image, the algorithm will safely abort and issue a clean warning in the log instead of causing a hard Python crash.
 | **Validation** | Basic error matrix. | External tools required. | Built-in (often python-only metrics). | **Automated HTML Dashboards** directly inside QGIS. |
 
 ---
