@@ -1,4 +1,4 @@
-# 🧠 Smart OBIA for QGIS
+# 🧠 Smart OBIA 1.0.1 for QGIS
 
 ![QGIS Version](https://img.shields.io/badge/QGIS-3.10%2B-green?logo=qgis)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)
